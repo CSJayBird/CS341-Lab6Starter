@@ -1,15 +1,14 @@
 ﻿namespace Lab6Starter;
 /**
  * 
- * Name: 
- * Date: How about this?
- * Description:
+ * Name: Maximilian Patterson and Jonathan Renier-Wigg
+ * Date: 11/1/2022
+ * Description: Working with github and implementing ResetGame()
  * Bugs:
  * Reflection:
  * 
  */
 
-using Lab6Starter;
 
 
 /// <summary>
@@ -79,7 +78,7 @@ public partial class MainPage : ContentPage
         {
             for (int c = 0; c < TicTacToeGame.GRID_SIZE; c++)
             {
-                if(button == grid[r, c])
+                if (button == grid[r, c])
                 {
                     row = r;
                     col = c;
@@ -87,7 +86,7 @@ public partial class MainPage : ContentPage
                 }
             }
         }
-        
+
     }
 
 
@@ -108,7 +107,13 @@ public partial class MainPage : ContentPage
     /// </summary>
     private void ResetGame()
     {
-
+        for (int row = 0; row < TicTacToeGame.GRID_SIZE; row++)
+        {
+            for (int col = 0; col < TicTacToeGame.GRID_SIZE; col++)
+            {
+                grid[row, col].Text = ""; // Reset current button text
+            }
+        }
     }
 
 }
