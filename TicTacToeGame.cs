@@ -8,11 +8,11 @@ namespace Lab6Starter;
 
 /**
  * 
- * Name: 
- * Date:
- * Description:
+ * Name: Maximilian Patterson and Jonathan Renier-Wigg
+ * Date: 11/1/2022
+ * Description: Working with github and implementing ResetGame()
  * Bugs:
- * Reflection: The most important bit ...
+ * Reflection:
  * 
  */
 
