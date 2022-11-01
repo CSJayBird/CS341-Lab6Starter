@@ -107,13 +107,11 @@ public partial class MainPage : ContentPage
     /// </summary>
     private void ResetGame()
     {
-        for (int row = 0; row < grid.Length;)
+        for (int row = 0; row < TicTacToeGame.GRID_SIZE; row++)
         {
-            for (int col = 0; col < grid.Length;)
+            for (int col = 0; col < TicTacToeGame.GRID_SIZE; col++)
             {
-                // Set current button text to ""
-                Button button = grid[row, col];
-                button.Text = "";
+                grid[row, col].Text = ""; // Reset current button text
             }
         }
     }
