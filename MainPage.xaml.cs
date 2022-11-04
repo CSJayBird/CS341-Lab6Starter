@@ -93,11 +93,15 @@ public partial class MainPage : ContentPage
     /// <summary>
     /// Celebrates victory, displaying a message box and resetting the game
     /// </summary>
-    private void CelebrateVictory(Player victor)
+    private async void CelebrateVictory(Player victor)
     {
         //MessageBox.Show(Application.Current.MainWindow, String.Format("Congratulations, {0}, you're the big winner today", victor.ToString()));
         XScoreLBL.Text = String.Format("X's Score: {0}", ticTacToe.XScore);
         OScoreLBL.Text = String.Format("O's Score: {0}", ticTacToe.OScore);
+        await DisplayAlert(String.Format("Congratulations, {0}", victor.ToString()),
+            String.Format("you're the big winner today\n{0}\n{1}", XScoreLBL.Text, OScoreLBL.Text), "Next Game");
+
+
 
         ResetGame();
     }
