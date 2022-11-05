@@ -101,7 +101,7 @@ public partial class MainPage : ContentPage
 
         await DisplayAlert(String.Format("Congratulations, {0}", victor.ToString()),
             String.Format("you're the big winner today\n{0}\n{1}", XScoreLBL.Text, OScoreLBL.Text), "Next Game");
-
+        
         ResetGame();
     }
 
@@ -117,6 +117,8 @@ public partial class MainPage : ContentPage
                 grid[row, col].Text = ""; // Reset current button text
             }
         }
+
+        ticTacToe = new TicTacToeGame();
     }
 
 }
