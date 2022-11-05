@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace Lab6Starter;
 /**
@@ -21,6 +22,7 @@ public partial class MainPage : ContentPage
     TicTacToeGame ticTacToe; // model class
     Button[,] grid;          // stores the buttons
     Stopwatch stopwatch; // Stopwatch for game timer
+    ObservableCollection<GameResult> GameList = new ObservableCollection<GameResult>();
 
     /// <summary>
     /// initializes the component
@@ -30,7 +32,7 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         ticTacToe = new TicTacToeGame();
         grid = new Button[TicTacToeGame.GRID_SIZE, TicTacToeGame.GRID_SIZE] { { Tile00, Tile01, Tile02 }, { Tile10, Tile11, Tile12 }, { Tile20, Tile21, Tile22 } };
-
+        GameListLV.ItemsSource = GameList;
         StartStopwatch();
     }
 
@@ -74,7 +76,21 @@ public partial class MainPage : ContentPage
         if (gameOver)
         {
             CelebrateVictory(victor);
+            GameList.Add(new GameResult(victor, stopwatch.Elapsed));
+            stopwatch.Stop();
+        }
+    }
 
+    // Class that represents a game result, rendered in the list view
+    private class GameResult
+    {
+        public String Winner { get; set; }
+        public String Duration { get; set; }
+
+        public GameResult(Player winner, TimeSpan duration)
+        {
+            Winner = winner.ToString();
+            Duration = duration.ToString(@"mm\:ss");
         }
     }
 

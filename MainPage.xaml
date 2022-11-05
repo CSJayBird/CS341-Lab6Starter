@@ -10,6 +10,14 @@
             <Label x:Name="OScoreLBL" Text="O's Score: 0"  VerticalOptions="Center" FontSize="24"/>
             <Label x:Name="StopwatchLBL" Text="0"  VerticalOptions="Center" FontSize="24"/>
 
+            <ListView x:Name="GameListLV" ItemsSource="{Binding GameList}" VerticalOptions="Center">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Winner}" Detail="{Binding Duration}" TextColor="Blue" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
             <Grid Background="Chartreuse" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
