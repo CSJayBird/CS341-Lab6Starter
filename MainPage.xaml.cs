@@ -1,4 +1,6 @@
-﻿namespace Lab6Starter;
+﻿using System.Diagnostics;
+
+namespace Lab6Starter;
 /**
  * 
  * Name: Maximilian Patterson and Jonathan Renier-Wigg
@@ -18,7 +20,7 @@ public partial class MainPage : ContentPage
 {
     TicTacToeGame ticTacToe; // model class
     Button[,] grid;          // stores the buttons
-
+    Stopwatch stopwatch; // Stopwatch for game timer
 
     /// <summary>
     /// initializes the component
@@ -28,6 +30,20 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         ticTacToe = new TicTacToeGame();
         grid = new Button[TicTacToeGame.GRID_SIZE, TicTacToeGame.GRID_SIZE] { { Tile00, Tile01, Tile02 }, { Tile10, Tile11, Tile12 }, { Tile20, Tile21, Tile22 } };
+
+        StartStopwatch();
+    }
+
+    private void StartStopwatch()
+    {
+        // Start new Stopwatch bound to StopwatchLBL
+        stopwatch = new Stopwatch();
+        stopwatch.Start();
+        Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+        {
+            StopwatchLBL.Text = stopwatch.Elapsed.ToString(@"mm\:ss");
+            return true;
+        });
     }
 
     /// <summary>
@@ -101,7 +117,7 @@ public partial class MainPage : ContentPage
 
         await DisplayAlert(String.Format("Congratulations, {0}", victor.ToString()),
             String.Format("you're the big winner today\n{0}\n{1}", XScoreLBL.Text, OScoreLBL.Text), "Next Game");
-        
+
         ResetGame();
     }
 
@@ -118,7 +134,8 @@ public partial class MainPage : ContentPage
             }
         }
 
-        ticTacToe = new TicTacToeGame();
+        StartStopwatch();
+        ticTacToe.ResetGame();
     }
 
 }
