@@ -1,4 +1,7 @@
-﻿namespace Lab6Starter;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
+
+namespace Lab6Starter;
 /**
  * 
  * Name: Maximilian Patterson and Jonathan Renier-Wigg
@@ -18,7 +21,8 @@ public partial class MainPage : ContentPage
 {
     TicTacToeGame ticTacToe; // model class
     Button[,] grid;          // stores the buttons
-
+    Stopwatch stopwatch; // Stopwatch for game timer
+    ObservableCollection<GameResult> GameList = new ObservableCollection<GameResult>();
 
     /// <summary>
     /// initializes the component
@@ -28,6 +32,20 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         ticTacToe = new TicTacToeGame();
         grid = new Button[TicTacToeGame.GRID_SIZE, TicTacToeGame.GRID_SIZE] { { Tile00, Tile01, Tile02 }, { Tile10, Tile11, Tile12 }, { Tile20, Tile21, Tile22 } };
+        GameListLV.ItemsSource = GameList;
+        StartStopwatch();
+    }
+
+    private void StartStopwatch()
+    {
+        // Start new Stopwatch bound to StopwatchLBL
+        stopwatch = new Stopwatch();
+        stopwatch.Start();
+        Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+        {
+            StopwatchLBL.Text = stopwatch.Elapsed.ToString(@"mm\:ss");
+            return true;
+        });
     }
 
     /// <summary>
@@ -58,7 +76,21 @@ public partial class MainPage : ContentPage
         if (gameOver)
         {
             CelebrateVictory(victor);
+            GameList.Add(new GameResult(victor, stopwatch.Elapsed));
+            stopwatch.Stop();
+        }
+    }
 
+    // Class that represents a game result, rendered in the list view
+    private class GameResult
+    {
+        public String Winner { get; set; }
+        public String Duration { get; set; }
+
+        public GameResult(Player winner, TimeSpan duration)
+        {
+            Winner = winner.ToString();
+            Duration = duration.ToString(@"mm\:ss");
         }
     }
 
@@ -93,11 +125,14 @@ public partial class MainPage : ContentPage
     /// <summary>
     /// Celebrates victory, displaying a message box and resetting the game
     /// </summary>
-    private void CelebrateVictory(Player victor)
+    private async void CelebrateVictory(Player victor)
     {
         //MessageBox.Show(Application.Current.MainWindow, String.Format("Congratulations, {0}, you're the big winner today", victor.ToString()));
         XScoreLBL.Text = String.Format("X's Score: {0}", ticTacToe.XScore);
         OScoreLBL.Text = String.Format("O's Score: {0}", ticTacToe.OScore);
+
+        await DisplayAlert(String.Format("Congratulations, {0}", victor.ToString()),
+            String.Format("you're the big winner today\n{0}\n{1}", XScoreLBL.Text, OScoreLBL.Text), "Next Game");
 
         ResetGame();
     }
@@ -114,6 +149,9 @@ public partial class MainPage : ContentPage
                 grid[row, col].Text = ""; // Reset current button text
             }
         }
+
+        StartStopwatch();
+        ticTacToe.ResetGame();
     }
 
 }
