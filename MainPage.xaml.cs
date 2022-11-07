@@ -7,8 +7,8 @@ namespace Lab6Starter;
  * Name: Maximilian Patterson and Jonathan Renier-Wigg
  * Date: 11/1/2022
  * Description: Working with github and implementing ResetGame()
- * Bugs:
- * Reflection:
+ * Bugs: N/A
+ * Reflection: We enjoyed this lab. I think the Git related labs are good because it's something everyone needs to know.
  * 
  */
 
